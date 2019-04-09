@@ -1,8 +1,10 @@
 import random
 
+
+
 '''Tic Tac Toe board class'''
 
-class Board():
+class Board:
 
     def __init__(self):
         self.Board = [['_', '_', '_'],
@@ -65,50 +67,57 @@ class Board():
         self.Board = [['_', '_', '_'],
                       ['_', '_', '_'],
                       ['_', '_', '_']]
-                
-def player1():
-    if not TIC_TAC_TOE.check_full():
-        TIC_TAC_TOE.print_board()
-        print("Player 1's turn!")
-        row = int(input("Row: "))
-        col = int(input("Col: "))
-        while row not in range(1, 4) or col not in range(1, 4) or not TIC_TAC_TOE.insert(row, col, 'X'):
-            print("Invalid move!")
+
+class Game:
+
+    def __init__(self):
+        self.TIC_TAC_TOE = Board()
+
+    def player1(self):
+        if not self.TIC_TAC_TOE.check_full():
+            self.TIC_TAC_TOE.print_board()
             print("Player 1's turn!")
             row = int(input("Row: "))
             col = int(input("Col: "))
+            while row not in range(1, 4) or col not in range(1, 4) or not self.TIC_TAC_TOE.insert(row, col, 'X'):
+                print("Invalid move!")
+                print("Player 1's turn!")
+                row = int(input("Row: "))
+                col = int(input("Col: "))
         
-def player2():
-    if not TIC_TAC_TOE.check_full():
-        TIC_TAC_TOE.print_board()
-        print("Player 2's turn!")
-        row = int(random.randint(1, 3))
-        col = int(random.randint(1, 3))
-        while not TIC_TAC_TOE.insert(row, col, 'O'):
+    def player2(self):
+        if not self.TIC_TAC_TOE.check_full():
+            self.TIC_TAC_TOE.print_board()
+            print("Player 2's turn!")
             row = int(random.randint(1, 3))
             col = int(random.randint(1, 3))
-                
-        print("Player 2's move: {},{}".format(str(row), str(col)))
+            while not self.TIC_TAC_TOE.insert(row, col, 'O'):
+                row = int(random.randint(1, 3))
+                col = int(random.randint(1, 3))
+                    
+            print("Player 2's move: {},{}".format(str(row), str(col)))         
 
 def main():
     print("Tic-Tac-Toe Game!")
-    TIC_TAC_TOE = Board()
+    game = Game()
+
+    player_list = [game.player1, game.player2]
+
     play = 'Y'
     while play == 'Y':
-        TIC_TAC_TOE.clear_board()
-        while not TIC_TAC_TOE.check_winner('X') and not TIC_TAC_TOE.check_winner('O') and not TIC_TAC_TOE.check_full():
-            player1()
-            player2()
-            if TIC_TAC_TOE.check_winner('X'):
-                TIC_TAC_TOE.print_board()
+        game.TIC_TAC_TOE.clear_board()
+        while not game.TIC_TAC_TOE.check_winner('X') and not game.TIC_TAC_TOE.check_winner('O') and not game.TIC_TAC_TOE.check_full():
+            random.choice(player_list)()
+            if game.TIC_TAC_TOE.check_winner('X'):
+                game.TIC_TAC_TOE.print_board()
                 print("Player 1 WON!!!")
 
-            elif TIC_TAC_TOE.check_winner('O'):
-                TIC_TAC_TOE.print_board()
+            elif game.TIC_TAC_TOE.check_winner('O'):
+                game.TIC_TAC_TOE.print_board()
                 print("Player 2 WON!!!")
 
-        if TIC_TAC_TOE.check_full() and not TIC_TAC_TOE.check_winner('O') and not TIC_TAC_TOE.check_winner('X'):
-            TIC_TAC_TOE.print_board()
+        if game.TIC_TAC_TOE.check_full() and not game.TIC_TAC_TOE.check_winner('O') and not game.TIC_TAC_TOE.check_winner('X'):
+            game.TIC_TAC_TOE.print_board()
             print("Tie Game!!")
 
         play = input("Do you want to play again (Y/n)?: ")
