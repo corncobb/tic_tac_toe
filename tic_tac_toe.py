@@ -9,7 +9,6 @@ class Board():
                       ['_', '_', '_'],
                       ['_', '_', '_']]
 
-
     def print_board(self):
         print('\n' + '*'*30 + '\n')
         print("Current state:")
@@ -32,15 +31,12 @@ class Board():
             return False
 
     def check_full(self):
-        count = 0
         for i in self.Board:
             for j in i:
                 if j == '_':
-                    count = 1
-        if count == 1:
-            return False
-        else:
-            return True
+                    return False
+
+        return True
 
     def check_winner(self, player):
         #across
@@ -96,6 +92,7 @@ def player2():
 
 def main():
     print("Tic-Tac-Toe Game!")
+    TIC_TAC_TOE = Board()
     play = 'Y'
     while play == 'Y':
         TIC_TAC_TOE.clear_board()
@@ -120,5 +117,4 @@ def main():
             play = input("Do you want to play again (Y/n)?: ")
     
 if __name__ == '__main__':
-    TIC_TAC_TOE = Board()
     main()
